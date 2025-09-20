@@ -28,6 +28,20 @@ const countBtn = document.getElementById("countBtn");
 // 1. Mostrar todos os livros ao carregar a página
 //    - Usar forEach para percorrer o array e criar <li> para cada livro.
 
+
+// Função para renderizar lista
+function renderBooks(list) {
+  bookList.innerHTML = "";
+  list.forEach(book => {
+    const li = document.createElement("li");
+    li.textContent = `${book.title} - ${book.author}`;    
+    bookList.appendChild(li);
+  });
+}
+
+// Mostrar todos no início
+renderBooks(books);
+
 // 2. Implementar a busca:
 //    - Quando o botão "Buscar" for clicado, mostrar apenas os livros
 //      cujo título contenha o texto digitado.

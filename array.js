@@ -71,11 +71,24 @@
 // 3 Somar valores de um array de objetos
 // Dado um array de produtos, calcule o preço total.
 
-const produtos = [
-  { nome: "Camisa", preco: 50 },
-  { nome: "Calça", preco: 120 },
-  { nome: "Boné", preco: 30 }
-];
+// const produtos = [
+//   { nome: "Camisa", preco: 50 },
+//   { nome: "Calça", preco: 120 },
+//   { nome: "Boné", preco: 30 }
+// ];
+
+// function calcProdutosTotal (produtos) {
+//   let total = 0
+
+//   produtos.forEach(produto => {
+//     let preco = produto.preco
+//     total+=preco
+//   });
+
+//   return total
+// }
+
+// calcProdutosTotal(produtos)
 
 
 
@@ -84,14 +97,35 @@ const produtos = [
 // Dado um array de frutas, monte um objeto onde a chave é o nome da fruta e o valor é a quantidade de vezes que ela aparece.
 
 // Exemplo de entrada:
-const frutas = ["maçã", "banana", "laranja", "maçã", "banana", "maçã"];
+// const frutas = ["maçã", "banana", "laranja", "maçã", "banana", "maçã"];
 
-result = {
-  maçã: 3,
-  banana: 2,
-  laranja: 1
-}
+// result = {
+//   maçã: 3,
+//   banana: 2,
+//   laranja: 1
+// }
 
+// function contaFruta (frutas) {
+
+//   let objetoFrutas = {}
+
+//   frutas.forEach(fruta => {
+    
+//     if( fruta in objetoFrutas ) {
+//       objetoFrutas[fruta]++
+//     }
+
+//     else {
+//       objetoFrutas[fruta] = 1
+//     }
+
+//   });
+
+//   return objetoFrutas 
+
+// }
+
+// console.log(contaFruta(frutas))
 
 
 
@@ -106,6 +140,27 @@ const alunos = [
   { nome: "Carlos", nota: 9.5 },
   { nome: "Maria", nota: 7 }
 ];
+
+function calculaMaiorNota (alunos) {
+
+  let melhorAluno = alunos[0]
+
+  alunos.forEach(aluno => {
+
+    let notaMelhorAtualmente = melhorAluno.nota
+    let notaParaComparar     = aluno.nota
+
+    if(notaParaComparar > notaMelhorAtualmente) {
+      melhorAluno = aluno
+    }
+
+  });
+
+  return melhorAluno.nome
+
+}
+
+console.log(calculaMaiorNota(alunos))
 
 
 // Resultado esperado:

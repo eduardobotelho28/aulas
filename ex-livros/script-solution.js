@@ -29,6 +29,7 @@ renderBooks(books);
 
 // Buscar
 searchBtn.addEventListener("click", () => {
+  
   const term = searchInput.value.toLowerCase();
   let foundBooks = [];
 
