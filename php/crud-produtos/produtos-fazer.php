@@ -1,27 +1,73 @@
 <?php
 require_once __DIR__ . "/conexao.php";
 
-/*
- * TAREFA:
- * 1. Crie um formulário HTML (método POST) para cadastrar produtos,
- *    com campos: nome e preço.
- * 
- * 2. Ao receber os dados:
- *    - Valide se o nome não está vazio.
- *    - Valide se o preço é numérico.
- *    - Se estiver tudo certo, insira no banco de dados usando prepare() e execute().
- * 
- * 3. Após a inserção, liste todos os produtos cadastrados:
- *    - Use SELECT * FROM produtos
- *    - Exiba em uma tabela HTML com as colunas Nome e Preço.
- *    - Se não houver produtos, exiba a mensagem "Nenhum produto encontrado."
- * 
- * DICAS:
- * - Use $_SERVER['REQUEST_METHOD'] === 'POST' para saber se o form foi enviado.
- * - Use htmlspecialchars() ao exibir dados vindos do banco.
- * - Use number_format() para formatar o preço.
- */
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['nome']   ;
+    $preco = $_POST['preco'] ;
 
-// Seu código aqui ↓
+    if(!empty($preco) AND is_numeric($preco)) {
+
+        $preperado = $conn->prepare("INSERT INTO produtos (nome,preco) VALUES (:nome, :preco)");
+
+        $preperado->bindValue(':nome', $name);
+        $preperado->bindValue(':preco', $preco);
+        $preperado->execute();
+        
+    }
+}
+
+// Consulta todos os produtos
+$stmt = $conn->query("SELECT * FROM produtos");
+$produtos = $stmt->fetchAll();
 
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Cadastro de Produtos</h1>
+
+
+    <form action="" method="POST">
+        Nome
+        <input type="text" placeholder="Digite aqui o nome" name="nome"> </input>
+        
+        preço
+        <input type="text" placeholder="Digite aqui o preço" name="preco"> </input>
+        <button>Enviar</button>
+    </form>
+
+    <?php if(empty($produtos)) : ?>
+
+        <p>Nenhum produto no banco ainda...</p>
+
+    <?php else : ?>
+
+    <table border="2">
+
+            <tr>
+                <td>Nome</td>
+                <td>Preco</td>
+            </tr>
+
+            <?php foreach ($produtos as $produto) : ?>
+            
+                <tr>
+                    <td> <?= $produto['nome'] ?>  </td>
+                    <td> <?= $produto['preco']?>  </td>
+                </tr>
+
+            <?php endforeach ?>
+
+    </table>
+
+    <?php endif ?>
+    
+</body>
+</html>

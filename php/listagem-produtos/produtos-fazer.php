@@ -1,13 +1,68 @@
 <?php
-// : Criar um array associativo de produtos com as chaves: codigo, nome, preco e estoque.
-// Cada produto deve ser um elemento dentro de um array principal ($produtos).
 
-// : Calcular dinamicamente:
-// - A quantidade de produtos
-// - O estoque total (somando os estoques)
-// - O preço médio (média dos preços, cuidando para não dividir por zero)
+$produtos = [
 
-// Dica: utilize as funções count(), number_format() e empty() conforme o enunciado.
+    [ 
+        "codigo"   => "12345", 
+        "nome"     => "produto1", 
+        "preco"    => "20", 
+        "estoque"  => 1 ,
+    ],
+
+    [ 
+        "codigo"   => "12345", 
+        "nome"     => "produto2", 
+        "preco"    => "30", 
+        "estoque"  => 1 ,
+    ],
+
+    [ 
+        "codigo"   => "12345", 
+        "nome"     => "produto3", 
+        "preco"    => "20", 
+        "estoque"  => 1 ,
+    ],
+
+    [ 
+        "codigo"   => "12345", 
+        "nome"     => "produto4", 
+        "preco"    => "40", 
+        "estoque"  => 1 ,
+    ],
+
+    [ 
+        "codigo"   => "12345", 
+        "nome"     => "produto5", 
+        "preco"    => "50", 
+        "estoque"  => 1 ,
+    ],
+
+];
+
+
+$quantidadeProdutos = count($produtos);
+
+$somaPrecos = 0;
+$somaEstoque = 0;
+
+foreach ($produtos as $produto) {
+    
+    $precoAtual = $produto['preco'];
+    $somaPrecos = $somaPrecos + $precoAtual;
+
+    $estoqueAtual = $produto['estoque'];
+    $somaEstoque = $somaEstoque + $estoqueAtual;
+
+}
+
+if($quantidadeProdutos > 0) {
+    $precoMedio = $somaPrecos/$quantidadeProdutos;
+}
+
+else  {
+    $precoMedio = 0;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -16,20 +71,43 @@
     <meta charset="UTF-8">
     <title>Relatório de Produtos</title>
     <style>
-        /* : estilizar a tabela (bordas simples, espaçamento e largura adequada) */
+        
     </style>
 </head>
 <body>
     <h1>Relatório de Produtos</h1>
 
     <?php if (empty($produtos)): ?>
-        <!-- : exibir mensagem "Nenhum produto encontrado" -->
+         <p>Nenhum Produto Encontrado</p>
     <?php else: ?>
-        <!-- : construir tabela com as colunas Código, Nome do Produto, Estoque e Preço -->
-        <!-- Dica: usar foreach na sintaxe alternativa -->
+
+        <table border="2" >
+
+            <tr>
+                <td>Nome </td>
+                <td>Codigo</td>
+                <td>Estoque</td>
+                <td>Preço</td>
+            </tr>
+
+
+            <?php foreach ($produtos as $produto) : ?> 
+
+                <tr>
+                   <td> <?= $produto['nome'] ?>   </td>
+                   <td> <?= $produto['codigo'] ?>  </td>
+                   <td> <?= $produto['estoque'] ?>  </td>
+                   <td> <?= number_format($produto['preco'], 2, ',', '.') ?>  </td> 
+                </tr>
+
+            <?php endforeach ?>
+
+        </table>
         
         <div>
-            <!-- : exibir quantidade, estoque total e preço médio -->
+          <p> Quantidade de Produtos :  <?= $quantidadeProdutos ?> </p>
+          <p> Soma do Estoque :  <?= $somaEstoque ?> </p>
+          <p> Preço Médio :  <?= number_format($precoMedio, 2, ',', '.') ?> </p>
         </div>
     <?php endif; ?>
 </body>

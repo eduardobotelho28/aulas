@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($nome && is_numeric($preco)) {
         // Inserção com PDO preparado
         $stmt = $conn->prepare("INSERT INTO produtos (nome, preco) VALUES (:nome, :preco)");
-        $stmt->bindValue(':nome', $nome);
-        $stmt->bindValue(':preco', $preco);
+        $stmt->bindValue(':nome', $nome);  // BLINDA O NOME 
+        $stmt->bindValue(':preco', $preco); // BLINDA O PREÇO
         $stmt->execute();
     }
 }
