@@ -31,6 +31,22 @@ Crie um array chamado "teams".
 Inicialize começando vazio.
 criar função para salvar o array no localStorage
 
+*/
+
+let teams = []
+
+const saved = localStorage.getItem("teams");
+if (saved) {
+  teams = JSON.parse(saved);
+  renderList();
+}
+
+function save () {
+  localStorage.setItem("teams", JSON.stringify(teams))
+}
+
+/*
+
 
 
 
@@ -49,10 +65,38 @@ Quando o usuário clicar em #addTeamBtn:
 5. Atualize a lista no DOM chamando uma função sua "renderList()".
 
 
+*/
 
+const addTeamBtn = document.querySelector('#addTeamBtn')
 
+addTeamBtn.addEventListener('click', function () {
 
+  const name = document.querySelector('#teamName').value.trim()
+  const titles = Number(document.querySelector('#teamTitles').value.trim())
 
+  if(name.length === 0) {
+    alert('Coloque um nome do time!')
+    return
+  }
+
+  const newTeam = {
+    name: name       ,
+    titles : titles  ,
+    id: Date.now()   , 
+  }
+
+  teams.push(newTeam)
+
+  
+  document.getElementById("teamName").value = "";
+  document.getElementById("teamTitles").value = "";
+
+  save()
+  renderList()
+
+})
+
+/*
 
 
 ------------------------------------
@@ -69,7 +113,48 @@ Crie uma função renderList():
 "Detalhes" deve chamar uma função sua showDetails(id)
 "Excluir" deve chamar uma função sua deleteTeam
 
+*/
 
+function renderList (customList) {
+
+  const list = document.querySelector('#teamList')
+  list.innerHTML = ""
+
+  let teamsToRender = null
+
+  if(customList) {
+    teamsToRender = customList
+  }
+
+  else {
+    teamsToRender = teams
+  }
+
+  teamsToRender.forEach (team => {
+
+    const li = document.createElement('li')
+    li.textContent = `${team.name} (${team.titles})`
+
+    const btnDelete = document.createElement('button')
+    btnDelete.textContent = "Excluir"
+    btnDelete.classList.add("action-btn");
+    btnDelete.onclick = () => deleteTeam(team.id);
+
+    const btnDetails = document.createElement('button')
+    btnDetails.textContent = "Detalhes"
+    btnDetails.classList.add("action-btn");
+    btnDetails.onclick = () => showDetails(team.id);
+
+    li.appendChild(btnDetails)
+    li.appendChild(btnDelete)
+    
+    list.appendChild(li)
+
+  })
+
+}
+
+/*
 
 
 
@@ -86,6 +171,30 @@ Crie a função showDetails(id)
   -> Títulos
   -> Uma frase tipo: "O time X possui Y títulos nacionais."
 
+*/
+
+function showDetails (id) {
+
+  let found = false
+
+  teams.forEach(team => {
+      if(team.id == id) {
+        found = team
+      }
+  })
+
+  if(found) {
+
+    document.getElementById("teamDetails").innerHTML = 
+        `<h3>${found.name}</h3>
+         <p>Títulos nacionais: <strong>${found.titles}</strong></p>
+         <p>O time <strong>${found.name}</strong> possui <strong>${found.titles}</strong> títulos nacionais.</p>`;
+
+  }
+
+}
+
+/*
 
 
 
@@ -95,6 +204,30 @@ QUESTÃO 5 — deletar o time
 ------------------------------------
 Crie a função deleteTeam, recebe o id
 deleta o time a renderiza  novamente a lista
+
+*/
+
+function deleteTeam ( id ) {
+
+  let newList = []
+
+  teams.forEach (team => {
+
+    if(team.id != id) {
+      newList.push(team)
+    }
+
+  })
+
+  teams = newList
+
+  renderList()
+  save()
+
+}
+
+
+/*
 
 
 
@@ -108,6 +241,32 @@ Quando clicar em #searchBtn:
 - Utilize foreach
 - Atualize a lista temporariamente (SEM mexer no array original)
 
+*/
+
+const searchBtn = document.querySelector('#searchBtn')
+
+searchBtn.addEventListener('click', () => {
+
+  const text = document.querySelector('#searchInput').value.trim().toLowerCase()  
+
+  const newList = []
+
+  teams.forEach( team => {
+
+    if(team.name.toLowerCase().includes(text)) {
+      newList.push(team)
+    }
+    
+  } )
+
+  // teams = newList
+
+  renderList (newList)
+
+
+})
+
+/*
 
 
 
