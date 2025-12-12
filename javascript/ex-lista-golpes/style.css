@@ -1,0 +1,56 @@
+body {
+    background: #1c1c1c;
+    color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: auto;
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+section {
+    background: #2a2a2a;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border-left: 5px solid #ffcc00;
+}
+
+#buttons-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.cmd-btn {
+    background: #444;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cmd-btn:hover {
+    background: #666;
+}
+
+#clearBtn {
+    background: #ff4444;
+    font-weight: bold;
+}
+
+#sequenceDisplay, #resultDisplay {
+    padding: 15px;
+    background: #111;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+}
